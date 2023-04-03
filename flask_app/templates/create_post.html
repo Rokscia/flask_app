@@ -1,0 +1,24 @@
+{% extends 'parent.html' %}
+
+{% block content %}
+   <div class="container">
+    <h1 class="mt-4 mb-3">{{title}}</h1>
+    <form method="POST" action="{{ url_for('new_post') }}">
+
+        {{ form.csrf_token }}
+      <div class="form-group">
+        {{ form.date.label }}{{ form.date(class="form-control", placeholder="YYYY-MM-DD") }}
+      </div>
+      <div class="form-group">
+        {{ form.authors.label }}{{ form.authors(class="form-control", multiple="multiple") }}
+      </div>
+      <div class="form-group">
+        {{ form.title.label }}{{ form.title(class="form-control", placeholder="Post title") }}
+      </div>
+      <div class="form-group">
+        {{ form.text.label }}{{ form.text(class="form-control", rows=5, placeholder="Post content") }}
+      </div>
+      <button type="submit" class="btn btn-primary">Create Post</button>
+    </form>
+  </div>
+{% endblock %}

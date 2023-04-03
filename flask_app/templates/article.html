@@ -1,0 +1,13 @@
+<title>Post</title>
+{% extends "parent.html" %}
+{% block content %}
+  <div class="container">
+    <h1 class="mt-4 mb-3">{{ post.title }}</h1>
+    <p>{{ post.date }}</p>
+    {% for author in post.authors %}
+<p><i>{{ author }}</i> | Email: <strong>{{author.email }}</strong></p>
+    {% endfor %}
+<hr>
+<p>{{ post.text }}</p>
+  </div>
+{% endblock %}
