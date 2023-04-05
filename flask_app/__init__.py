@@ -1,8 +1,9 @@
 import os
 from sqlalchemy import MetaData
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
 
 app = Flask(__name__)
 
@@ -18,6 +19,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.urandom(32)
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'register'
+login_manager.login_message_category = "info"
+
+
+bcrypt = Bcrypt(app)
 
 metadata = MetaData(naming_convention=convention)
 app.app_context().push()

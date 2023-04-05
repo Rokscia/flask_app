@@ -1,0 +1,19 @@
+<!-- login_modal.html -->
+<div class="modal" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Login</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('login') }}">
+          {{ login_form.hidden_tag() }}
+          {{ login_form.email.label }} {{ login_form.email }}
+          {{ login_form.password.label }} {{ login_form.password }}
+          {{ login_form.submit }}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

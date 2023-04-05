@@ -1,13 +1,44 @@
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_app import app, db
-from .form import PostForm
-from .models import Post, Author
+from .form import PostForm, RegisterForm, LoginForm
+from .models import Post, Author, User
 from werkzeug.datastructures import MultiDict
 
 
 @app.route("/")
 def home():
     return render_template('home.html')
+
+
+@app.context_processor
+def inject_forms():
+    return dict(login_form=LoginForm(), register_form=RegisterForm())
+
+
+@app.route("/register", methods=['POST'])
+def register():
+    # db.create_all()
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('New user was successfully registered. You can log in now', 'success')
+        return redirect(url_for('home'))
+    return jsonify({'success': False, 'errors': form.errors})
+
+
+# @app.route("/login", methods=['POST'])
+# def login():
+#     pass
+@app.route("/login", methods=['POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        return render_template('greetings.html', username=username)
+    else:
+        return render_template('login.html')
+
 
 
 def check_if_leap_year(year: int):
@@ -30,13 +61,13 @@ def leap_year():
         return render_template('leap_year.html', leap_years=leap_years, answer=answer, year=year)
 
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        return render_template('greetings.html', username=username)
-    else:
-        return render_template('login.html')
+# @app.route("/login", methods=['GET', 'POST'])
+# def login():
+#     if request.method == 'POST':
+#         username = request.form['username']
+#         return render_template('greetings.html', username=username)
+#     else:
+#         return render_template('login.html')
 
 
 @app.route("/posts")

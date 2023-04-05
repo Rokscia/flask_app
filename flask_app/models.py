@@ -1,7 +1,33 @@
-from flask_app import app, db
+from flask_app import app, db, bcrypt, login_manager
 from flask_migrate import Migrate
+from flask_login import UserMixin
+from datetime import datetime
+
 
 migrate = Migrate(app, db)
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column('Username', db.String(20), unique=True, nullable=False)
+    email = db.Column('Email', db.String(100), unique=True, nullable=False)
+    password = db.Column('Password', db.String, nullable=False)
+    created_on = db.Column('Created on', db.DateTime, nullable=False)
+
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password = bcrypt.generate_password_hash(password)
+        self.created_on = datetime.now()
+
+    def __repr__(self):
+        return f'User: {self.username}'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 helper_table = db.Table('helper',

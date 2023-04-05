@@ -34,10 +34,6 @@ def get_author(author_id):
 @app.route('/api/authors/<author_id>', methods=['PUT'])
 def edit_author(author_id):
     author = Author.query.get(author_id)
-    # author.name = request.json.get('name', author.name)
-    # author.nationality = request.json.get('nationality', author.nationality)
-    # author.phone = request.json.get('phone', author.phone)
-    # author.email = request.json.get('email', author.email)
     update_dict = request.json
     for key, value in update_dict.items():
         setattr(author, key, value)

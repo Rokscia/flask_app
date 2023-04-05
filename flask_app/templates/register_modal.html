@@ -1,0 +1,22 @@
+<!-- register_modal.html -->
+<div class="modal" id="registerModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Register</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('register') }}">
+          {{ register_form.hidden_tag() }}
+          {{ register_form.username.label }} {{ register_form.username }}
+          {{ register_form.email.label }} {{ register_form.email }}
+          {{ register_form.password.label }} {{ register_form.password }}
+          {{ register_form.confirm_password.label }} {{ register_form.confirm_password }}
+          {{ register_form.submit }}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
