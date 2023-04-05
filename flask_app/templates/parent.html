@@ -28,14 +28,11 @@
   </div>
 </nav>
 
-<!-- Login and register modals -->
-    {% include 'login_modal.html' %}
-    {% include 'register_modal.html' %}
 
 <!--flash messages-->
 {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class="flashes">
+{% if messages %}
+<ul class="flashes">
       {% for message in messages %}
         <li>{{ message }}</li>
       {% endfor %}
@@ -45,6 +42,11 @@
 
 {% block content %}
 {% endblock %}
+
+<!-- Login and register modals -->
+{% include 'login_modal.html' %}
+{% include 'register_modal.html' %}
+
 <script>
       // Activate the login modal
       $('#loginModal').modal('show');

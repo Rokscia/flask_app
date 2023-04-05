@@ -1,18 +1,31 @@
 <!-- login_modal.html -->
-<div class="modal" id="loginModal">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Login</h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form method="POST" action="{{ url_for('login') }}">
           {{ login_form.hidden_tag() }}
-          {{ login_form.email.label }} {{ login_form.email }}
-          {{ login_form.password.label }} {{ login_form.password }}
-          {{ login_form.submit }}
+          <div class="mb-3">
+            {{ login_form.email.label }}
+            {{ login_form.email(class_="form-control", id="email", aria_describedby="emailHelp") }}
+          </div>
+          <div class="mb-3">
+            {{ login_form.password.label }}
+            {{ login_form.password(class_="form-control", id="password") }}
+          </div>
+          <div class="mb-3 form-check">
+            {{ login_form.remember_me(class_="form-check-input", id="remember_me") }}
+            <label class="form-check-label" for="remember_me">Remember me</label>
+          </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        {{ login_form.submit(class_="btn btn-primary") }}
       </div>
     </div>
   </div>
